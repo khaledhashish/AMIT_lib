@@ -11,33 +11,23 @@
 #include "LCD_4.h"
 #include "shortcuts.h"
 
-void up();
-void down();
+
 
 int main(void)
 {
 	LCD_init();
 	DDRC=0x07;
+	keypad();
+	LCD_Write_Str("hi");
+	LCD_GoTo_xy(1,2);
 	
 	while (1)
 	{	
-		//LCD_Clear();
-		LCD_num(keypad());
-		_delay_ms(500);
+		if(isPressedC(3) || isPressedC(4) || isPressedC(5) || isPressedC(6))
+			LCD_num(keypad());
+		_delay_ms(50);
 	}
 }
 
-void up(){
-	for(int i=0;i<8;i++){
-		setPinC(i);
-		_delay_ms(2000);
-		resetPinC(i);
-	}
-}
-void down(){
-	for(int i=7;i>=0;i--){
-		setPinC(i);
-		_delay_ms(2000);
-		resetPinC(i);
-	}
-}
+
+

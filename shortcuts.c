@@ -100,6 +100,6 @@ int isPressedD(int pinNumber){
 
 int isPressed(char data,int pinNumber)
 {
-	if(PIND & (1<<pinNumber))return 1;
+	if(data & (1<<pinNumber))return 1;
 	else return 0;
 }

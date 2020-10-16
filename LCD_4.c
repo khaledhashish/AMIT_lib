@@ -11,29 +11,35 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define LCD_DATA PORTB
+#define LCD_DATA PORTA
 #define ctrl PORTB
-#define LCD_Data_Pins DDRB
+
+#define LCD_Data_Pins DDRA
 #define LCD_ctrl_Pins DDRB
-#define en 3
+
 #define RS 1
 #define Rw 2
+#define en 3
 
 void LCD_cmd(char comm){
-	resetPinB(RS);
+	ctrl &= ~(1<<RS);
 	LCD_DATA = (LCD_DATA & 0x0F) | (comm & 0xF0);
-	setPinB(en);
-	_delay_ms(100);
-	resetPinB(en);
-	_delay_ms(100);
+	ctrl |= 1<<en;
+	_delay_ms(50);
+	ctrl &= ~(1<<en);
+	_delay_ms(50);
 	LCD_DATA = (LCD_DATA & 0x0F) | (comm << 4);
-	setPinB(en);
-	_delay_ms(100);
-	resetPinB(en);
+	ctrl |= 1<<en;
+	_delay_ms(50);
+	ctrl &= ~(1<<en);
 }
 
 void LCD_init(){
 	LCD_Data_Pins=0xff;
+	DDRB |= 1<<en;
+	DDRB |= 1<<RS;
+	DDRB |= 1<<Rw;
+	ctrl &= ~(1<<Rw);
 	LCD_cmd(0x02);
 	_delay_ms(100);
 	LCD_cmd(0x28); //4-bit mode
@@ -50,16 +56,16 @@ void LCD_init(){
 }
 
 void LCD_Write(char data){
-	setPinB(RS);
+	ctrl |= 1<<RS;
 	LCD_DATA = (LCD_DATA & 0x0F) | (data & 0xF0);
-	setPinB(en);
-	_delay_ms(100);
-	resetPinB(en);
-	_delay_ms(200);
+	ctrl |= 1<<en;
+	_delay_ms(50);
+	ctrl &= ~(1<<en);
+	_delay_ms(50);
 	LCD_DATA = (LCD_DATA & 0x0F) | (data << 4);
-	setPinB(en);
-	_delay_ms(100);
-	resetPinB(en);
+	ctrl |= 1<<en;
+	_delay_ms(50);
+	ctrl &= ~(1<<en);
 	
 }
 void LCD_Write_Str(char* data){
