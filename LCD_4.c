@@ -34,6 +34,10 @@ void LCD_cmd(char comm){
 	ctrl &= ~(1<<en);
 }
 
+void LCD_Home(){
+	LCD_cmd(0x02);
+}
+
 void LCD_init(){
 	LCD_Data_Pins=0xff;
 	DDRB |= 1<<en;

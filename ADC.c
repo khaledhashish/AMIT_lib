@@ -50,10 +50,11 @@ void ADC_init(int channelNO,int Ref,int Prescaler){
 
 void ADC_StartConv(){
 	ADCSRA |= (1<<ADSC);
+	while(!(ADCSRA & (1<<ADIF)));
 }
 
 int ADC_read(){
 	int val = ADCL;
 	val |= (ADCH<<8);	
-	return val*2.932551319648094;
+	return val*4.887585532746823;
 }

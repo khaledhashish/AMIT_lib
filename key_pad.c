@@ -17,12 +17,12 @@ int k;
 #define out2 1
 #define out3 2
 #define in1 3
-#define in2 4
+#define in2 4 
 #define in3 5
 #define in4 6
 
 int keypad(){
-	
+	DDRC=0x07;
 	data_pins |= (1<<out1);data_pins |= (1<<out2);data_pins |= (1<<out3);
 	if (data_in & (1<<in1))k=first_three();
 	if (data_in & (1<<in2))k=second_three();

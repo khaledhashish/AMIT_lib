@@ -20,3 +20,4 @@ void LCD_Write_Str(char*);
 void LCD_num(int);
 void LCD_Clear();
 void LCD_GoTo_xy(int,int);
+void LCD_Home();
